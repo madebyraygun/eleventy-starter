@@ -1,0 +1,25 @@
+# Sveltia CMS configuration.
+# Push Pop fills in `repo` with the GitHub repo it creates for the site.
+backend:
+  name: github
+  repo: __REPO__
+  branch: main
+
+# Allow editing against the local working copy during `npm run dev`
+# (run `npx @sveltia/cms-proxy-server` alongside the dev server).
+local_backend: true
+
+media_folder: "src/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: pages
+    label: Pages
+    files:
+      - name: home
+        label: Home page
+        file: "src/index.md"
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Layout, name: layout, widget: hidden, default: "base.njk" }
+          - { label: Body, name: body, widget: markdown }
