@@ -4,6 +4,7 @@
   "private": true,
   "description": "Eleventy + Sveltia CMS starter for Push Pop.",
   "scripts": {
+    "test": "node --test 'scaffold/*.test.js'",
     "dev": "eleventy --serve",
     "build": "eleventy",
     "deploy": "bash deploy.sh",
