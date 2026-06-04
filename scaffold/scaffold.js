@@ -31,21 +31,36 @@ const layer = path.join(__dirname, template);
 if (!fs.existsSync(path.join(layer, "src"))) fail(`missing template layer: ${layer}/src`);
 if (!fs.existsSync(path.join(layer, "cms.yml"))) fail(`missing template layer: ${layer}/cms.yml`);
 
-// 1. Overlay the template's seed content onto src/.
-fs.cpSync(path.join(layer, "src"), path.join(root, "src"), { recursive: true });
-
-// 2. Merge the template's CMS collections (collections: is the final key in config.yml).
+// Read everything up front so validation failures leave the tree untouched.
 const cmsPath = path.join(root, "src", "admin", "config.yml");
-fs.appendFileSync(cmsPath, "\n" + fs.readFileSync(path.join(layer, "cms.yml"), "utf8"));
-
-// 3. Record template and theme in site settings.
 const sitePath = path.join(root, "src", "_data", "site.json");
-const site = JSON.parse(fs.readFileSync(sitePath, "utf8"));
-site.template = template;
-site.theme = theme;
-fs.writeFileSync(sitePath, JSON.stringify(site, null, 2) + "\n");
+let fragment, cms, site;
+try {
+  fragment = fs.readFileSync(path.join(layer, "cms.yml"), "utf8");
+  cms = fs.readFileSync(cmsPath, "utf8");
+  site = JSON.parse(fs.readFileSync(sitePath, "utf8"));
+} catch (e) {
+  fail(`could not read site files: ${e.message}`);
+}
 
-// 4. Remove the scaffold machinery from the new site.
-fs.rmSync(__dirname, { recursive: true, force: true });
+const firstFragmentLine = fragment.split("\n").find((l) => l.trim());
+if (firstFragmentLine && cms.includes(firstFragmentLine)) {
+  fail(`already scaffolded: config.yml already contains the ${template} collections`);
+}
+
+try {
+  // 1. Overlay the template's seed content onto src/.
+  fs.cpSync(path.join(layer, "src"), path.join(root, "src"), { recursive: true });
+  // 2. Merge the template's CMS collections (collections: is the final key in config.yml).
+  fs.appendFileSync(cmsPath, "\n" + fragment);
+  // 3. Record template and theme in site settings.
+  site.template = template;
+  site.theme = theme;
+  fs.writeFileSync(sitePath, JSON.stringify(site, null, 2) + "\n");
+  // 4. Remove the scaffold machinery from the new site.
+  fs.rmSync(__dirname, { recursive: true, force: true });
+} catch (e) {
+  fail(`scaffolding failed mid-run (${e.message}); re-clone before retrying`);
+}
 
 console.log(`scaffolded template=${template} theme=${theme}`);

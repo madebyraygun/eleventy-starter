@@ -22,7 +22,7 @@ module.exports = function (eleventyConfig) {
   // Per-template collections; globs that don't exist simply yield empty lists,
   // so one shared config serves every template.
   eleventyConfig.addCollection("posts", (api) =>
-    api.getFilteredByGlob("src/posts/*.md").reverse()
+    api.getFilteredByGlob("src/posts/*.md").sort((a, b) => b.date - a.date)
   );
   eleventyConfig.addCollection("projects", (api) =>
     api

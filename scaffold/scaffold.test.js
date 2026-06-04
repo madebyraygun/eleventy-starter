@@ -55,3 +55,11 @@ test("rejects missing arguments", () => {
   const r = scaffold(dir, ["--template=blog"]);
   assert.notStrictEqual(r.status, 0);
 });
+
+test("refuses to run against an already-scaffolded config", () => {
+  const dir = freshCopy();
+  fs.appendFileSync(path.join(dir, "src/admin/config.yml"), "\n  - name: posts\n");
+  const r = scaffold(dir, ["--template=blog", "--theme=paper"]);
+  assert.notStrictEqual(r.status, 0);
+  assert.match(r.stderr, /already scaffolded/);
+});
