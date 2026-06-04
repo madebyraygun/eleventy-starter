@@ -1,0 +1,11 @@
+<footer class="site-footer">
+  <nav>
+    {% for item in collections.nav %}
+      <a href="{{ item.url }}">{{ item.data.title }}</a>
+    {% endfor %}
+    {% for link in site.extraLinks %}
+      <a href="{{ link.url }}">{{ link.label }}</a>
+    {% endfor %}
+  </nav>
+  {% if site.footerText %}<p>{{ site.footerText }}</p>{% endif %}
+</footer>
