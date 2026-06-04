@@ -63,3 +63,20 @@ test("refuses to run against an already-scaffolded config", () => {
   assert.notStrictEqual(r.status, 0);
   assert.match(r.stderr, /already scaffolded/);
 });
+
+test("applies --name to site settings", () => {
+  const dir = freshCopy();
+  execFileSync("node", [
+    path.join(dir, "scaffold", "scaffold.js"),
+    "--template=blog", "--theme=paper", "--name=Dalton's Blog & More",
+  ]);
+  const site = JSON.parse(fs.readFileSync(path.join(dir, "src/_data/site.json"), "utf8"));
+  assert.strictEqual(site.name, "Dalton's Blog & More");
+});
+
+test("keeps default name when --name omitted", () => {
+  const dir = freshCopy();
+  execFileSync("node", [path.join(dir, "scaffold", "scaffold.js"), "--template=blog", "--theme=paper"]);
+  const site = JSON.parse(fs.readFileSync(path.join(dir, "src/_data/site.json"), "utf8"));
+  assert.strictEqual(site.name, "New Site");
+});

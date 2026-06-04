@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Activates one template layer and one theme, then removes itself.
 // Zero dependencies: runs before `npm install` on a fresh clone.
-//   node scaffold/scaffold.js --template=blog --theme=paper
+//   node scaffold/scaffold.js --template=blog --theme=paper [--name='My Site']
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -56,6 +56,7 @@ try {
   // 3. Record template and theme in site settings.
   site.template = template;
   site.theme = theme;
+  if (args.name) site.name = args.name;
   fs.writeFileSync(sitePath, JSON.stringify(site, null, 2) + "\n");
   // 4. Remove the scaffold machinery from the new site.
   fs.rmSync(__dirname, { recursive: true, force: true });
