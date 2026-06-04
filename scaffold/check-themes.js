@@ -12,7 +12,12 @@ const REQUIRED = [
 
 const dir = path.join(__dirname, "..", "src", "assets", "css", "themes");
 let failed = false;
-for (const file of fs.readdirSync(dir).filter((f) => f.endsWith(".css"))) {
+const files = fs.readdirSync(dir).filter((f) => f.endsWith(".css"));
+if (files.length === 0) {
+  console.error(`no theme files found in ${dir}`);
+  process.exit(1);
+}
+for (const file of files) {
   const css = fs.readFileSync(path.join(dir, file), "utf8");
   for (const token of REQUIRED) {
     if (!css.includes(`${token}:`)) {
