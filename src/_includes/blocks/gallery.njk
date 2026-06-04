@@ -1,5 +1,5 @@
 <div class="block-gallery cols-{{ block.columns | default("3") }}">
   {% for item in block.images %}
-    <img src="{{ item.image }}" alt="{{ item.alt }}" />
+    {% if item.image %}<img src="{{ item.image }}" alt="{{ item.alt }}" />{% endif %}
   {% endfor %}
 </div>

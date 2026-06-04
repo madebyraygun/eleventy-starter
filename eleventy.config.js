@@ -6,7 +6,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/uploads": "uploads" });
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
-  // Markdown rendering for block fields (Text, FAQ answers).
+  // Markdown rendering for block fields (Text, FAQ answers). html:true is
+  // deliberate: block markdown is trusted single-owner content.
   const md = markdownIt({ html: true, linkify: true });
   eleventyConfig.addFilter("md", (value) => (value ? md.render(String(value)) : ""));
 
