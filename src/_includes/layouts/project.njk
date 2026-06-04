@@ -1,0 +1,13 @@
+---
+layout: layouts/base.njk
+---
+<article>
+  <h1>{{ title }}</h1>
+  {% if cover %}<img src="{{ cover }}" alt="{{ title }}" />{% endif %}
+  {{ content | safe }}
+  {% if gallery %}
+    <div class="block-gallery cols-3">
+      {% for item in gallery %}{% if item.image %}<img src="{{ item.image }}" alt="{{ item.alt }}" />{% endif %}{% endfor %}
+    </div>
+  {% endif %}
+</article>

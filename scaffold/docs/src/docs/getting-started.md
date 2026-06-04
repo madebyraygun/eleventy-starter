@@ -1,0 +1,5 @@
+---
+title: Getting Started
+order: 1
+---
+Your first documentation page. Pages appear in the sidebar in order.

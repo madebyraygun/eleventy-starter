@@ -1,0 +1,8 @@
+  - name: docs
+    label: Documentation pages
+    folder: "src/docs"
+    create: true
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Order, name: order, widget: number, default: 10 }
+      - { label: Body, name: body, widget: markdown }

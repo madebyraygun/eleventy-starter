@@ -1,0 +1,16 @@
+---
+layout: layouts/base.njk
+---
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <ul>
+      {% for doc in collections.docs %}
+        <li><a href="{{ doc.url }}"{% if doc.url == page.url %} aria-current="page"{% endif %}>{{ doc.data.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </aside>
+  <div class="docs-content">
+    <h1>{{ title }}</h1>
+    {{ content | safe }}
+  </div>
+</div>
