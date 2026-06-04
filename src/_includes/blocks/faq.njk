@@ -1,0 +1,8 @@
+<div class="block-faq">
+  {% for item in block.items %}
+    <details>
+      <summary>{{ item.question }}</summary>
+      <div>{{ item.answer | md | safe }}</div>
+    </details>
+  {% endfor %}
+</div>

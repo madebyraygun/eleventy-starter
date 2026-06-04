@@ -1,0 +1,5 @@
+<section class="block-cta">
+  {% if block.heading %}<h2>{{ block.heading }}</h2>{% endif %}
+  {% if block.text %}<p>{{ block.text }}</p>{% endif %}
+  <a class="button" href="{{ block.url }}">{{ block.label }}</a>
+</section>
