@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+---
+<h1>{{ title }}</h1>
+{{ content | safe }}
+<ul class="project-grid">
+  {% for project in collections.projects %}
+    <li>
+      <a href="{{ project.url }}">
+        {% if project.data.cover %}<img src="{{ project.data.cover }}" alt="{{ project.data.title }}" />{% endif %}
+        {{ project.data.title }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

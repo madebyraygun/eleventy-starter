@@ -12,14 +12,82 @@ local_backend: true
 media_folder: "src/uploads"
 public_folder: "/uploads"
 
+# NOTE: `collections:` must remain the FINAL top-level key in this file.
+# scaffold.js merges each template's extra collections by appending them here.
 collections:
+  - name: settings
+    label: Site Settings
+    files:
+      - name: site
+        label: Site Settings
+        file: "src/_data/site.json"
+        fields:
+          - { label: Site name, name: name, widget: string }
+          - label: Theme
+            name: theme
+            widget: select
+            options: [paper, signal, carbon, dune]
+          - { label: Template, name: template, widget: hidden }
+          - label: Extra navigation links
+            name: extraLinks
+            widget: list
+            required: false
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: URL, name: url, widget: string }
+          - { label: Footer text, name: footerText, widget: string, required: false }
+
   - name: pages
     label: Pages
-    files:
-      - name: home
-        label: Home page
-        file: "src/index.md"
-        fields:
-          - { label: Title, name: title, widget: string }
-          - { label: Layout, name: layout, widget: hidden, default: "base.njk" }
-          - { label: Body, name: body, widget: markdown }
+    folder: "src/pages"
+    create: true
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Show in navigation, name: nav_show, widget: boolean, default: true }
+      - { label: Nav order, name: nav_order, widget: number, default: 10 }
+      - { label: Layout, name: layout, widget: hidden, default: "layouts/page.njk" }
+      - label: Blocks
+        name: blocks
+        widget: list
+        types:
+          - name: heading
+            label: Heading
+            fields:
+              - { label: Text, name: text, widget: string }
+              - { label: Level, name: level, widget: select, options: ["2", "3"], default: "2" }
+          - name: text
+            label: Text
+            fields:
+              - { label: Body, name: body, widget: markdown }
+          - name: image
+            label: Image
+            fields:
+              - { label: Image, name: image, widget: image }
+              - { label: Alt text, name: alt, widget: string }
+              - { label: Caption, name: caption, widget: string, required: false }
+          - name: gallery
+            label: Image Gallery
+            fields:
+              - { label: Columns, name: columns, widget: select, options: ["2", "3", "4"], default: "3" }
+              - label: Images
+                name: images
+                widget: list
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - { label: Alt text, name: alt, widget: string }
+          - name: faq
+            label: FAQ
+            fields:
+              - label: Items
+                name: items
+                widget: list
+                fields:
+                  - { label: Question, name: question, widget: string }
+                  - { label: Answer, name: answer, widget: markdown }
+          - name: cta
+            label: Call to Action
+            fields:
+              - { label: Heading, name: heading, widget: string, required: false }
+              - { label: Text, name: text, widget: string, required: false }
+              - { label: Button label, name: label, widget: string }
+              - { label: Button URL, name: url, widget: string }

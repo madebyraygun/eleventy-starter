@@ -1,0 +1,8 @@
+---
+layout: layouts/base.njk
+---
+<article>
+  <h1>{{ title }}</h1>
+  <time datetime="{{ page.date.toISOString() }}">{{ page.date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) }}</time>
+  {{ content | safe }}
+</article>

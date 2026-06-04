@@ -4,12 +4,14 @@
   "private": true,
   "description": "Eleventy + Sveltia CMS starter for Push Pop.",
   "scripts": {
+    "test": "node --test scaffold/*.test.js",
     "dev": "eleventy --serve",
     "build": "eleventy",
     "deploy": "bash deploy.sh",
     "deploy:dry": "bash deploy.sh --dry-run"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "markdown-it": "^14.2.0"
   }
 }

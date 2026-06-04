@@ -1,0 +1,16 @@
+  - name: projects
+    label: Projects
+    folder: "src/projects"
+    create: true
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Order, name: order, widget: number, default: 10 }
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - label: Gallery
+        name: gallery
+        widget: list
+        required: false
+        fields:
+          - { label: Image, name: image, widget: image }
+          - { label: Alt text, name: alt, widget: string }
+      - { label: Body, name: body, widget: markdown }

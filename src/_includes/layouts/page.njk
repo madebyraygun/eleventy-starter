@@ -1,0 +1,10 @@
+---
+layout: layouts/base.njk
+---
+{% if title %}<h1>{{ title }}</h1>{% endif %}
+{% set known = ["heading", "text", "image", "gallery", "faq", "cta"] %}
+{% for block in blocks %}
+  {% if block.type in known %}
+    {% include "blocks/" + block.type + ".njk" %}
+  {% endif %}
+{% endfor %}
