@@ -30,6 +30,13 @@ collections into `src/admin/config.yml`, records the template and theme in
 - `src/assets/css/themes/` — one design-token file per theme. Owners switch themes in
   the CMS Site Settings panel. Every theme must define the full token set
   (`node scaffold/check-themes.js` enforces this).
+- Site Settings → Design overrides any token per-site (colors, fonts, radius, spacing,
+  content width); set values render as a `:root` style block after the theme stylesheet,
+  unset values fall back to the theme. Fonts come from the curated catalog in
+  `src/_data/fontCatalog.json`; missing woff2 files download from the Fontsource CDN at
+  build time into `src/assets/fonts/` (committed on publish, so published sites stay
+  fully self-hosted). `node scaffold/check-fonts.js` keeps the catalog and the CMS
+  dropdowns in sync.
 - `src/_data/site.json` — site name, active theme, extra nav links, footer text.
   Exposed in the CMS as Site Settings.
 - Navigation builds automatically from pages with `nav_show`/`nav_order`; Site
