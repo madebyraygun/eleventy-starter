@@ -10,6 +10,7 @@ jobs:
         with:
           node-version: 22
       - run: node scaffold/check-themes.js
+      - run: node scaffold/check-fonts.js
       - run: npm test
 
   build:
@@ -25,3 +26,19 @@ jobs:
       - run: node scaffold/scaffold.js --template=${{ matrix.template }} --theme=paper
       - run: npm install
       - run: npx @11ty/eleventy
+
+  build-overrides:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scaffold/scaffold.js --template=blog --theme=paper
+      - run: node -e "const fs=require('fs');const p='src/_data/site.json';const s=JSON.parse(fs.readFileSync(p,'utf8'));s.design={colorAccent:'#336699',fontDisplay:'playfair-display',radius:12};fs.writeFileSync(p,JSON.stringify(s,null,2))"
+      - run: npm install
+      - run: npx @11ty/eleventy
+      - run: test -f src/assets/fonts/playfair-display-latin-400-normal.woff2
+      - run: 'grep -q -- "--color-accent: #336699;" _site/index.html'
+      - run: 'grep -q -- "--radius: 12px;" _site/index.html'
+      - run: grep -q "Playfair Display" _site/assets/css/fonts.css
