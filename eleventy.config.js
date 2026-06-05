@@ -14,7 +14,9 @@ module.exports = function (eleventyConfig) {
   const md = markdownIt({ html: true, linkify: true });
   eleventyConfig.addFilter("md", (value) => (value ? md.render(String(value)) : ""));
 
-  // Design token overrides from CMS Site Settings.
+  // Design token overrides from CMS Site Settings. The download writes into
+  // watched src/assets/fonts, which can trigger one extra rebuild on first
+  // serve; the existsSync guard in downloadMissingFonts stops it looping.
   eleventyConfig.addFilter("designOverrides", designOverridesCss);
   eleventyConfig.addFilter("fontFaces", fontFacesCss);
   eleventyConfig.on("eleventy.before", async () => {

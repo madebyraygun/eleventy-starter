@@ -34,3 +34,11 @@ test("fonts resolve to catalog stacks", () => {
 test("unknown font slugs and empty strings are skipped", () => {
   assert.strictEqual(designOverridesCss({ fontDisplay: "nope", colorBg: "" }, CATALOG), "");
 });
+
+test("values that could break out of the style block are skipped", () => {
+  const css = designOverridesCss(
+    { colorBg: "red} </style><script>x</script>", colorAccent: "#00ff00", radius: "12; }" },
+    {}
+  );
+  assert.strictEqual(css, ":root { --color-accent: #00ff00; }");
+});
