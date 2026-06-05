@@ -36,6 +36,61 @@ collections:
               - { label: Label, name: label, widget: string }
               - { label: URL, name: url, widget: string }
           - { label: Footer text, name: footerText, widget: string, required: false }
+          - label: Design
+            name: design
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { label: Background color, name: colorBg, widget: color, required: false }
+              - { label: Surface color, name: colorSurface, widget: color, required: false }
+              - { label: Text color, name: colorText, widget: color, required: false }
+              - { label: Muted text color, name: colorMuted, widget: color, required: false }
+              - { label: Accent color, name: colorAccent, widget: color, required: false }
+              - { label: Text on accent color, name: colorAccentContrast, widget: color, required: false }
+              - label: Display font
+                name: fontDisplay
+                widget: select
+                required: false
+                options:
+                  - { label: Inter, value: inter }
+                  - { label: Lora, value: lora }
+                  - { label: Space Grotesk, value: space-grotesk }
+                  - { label: Source Serif 4, value: source-serif-4 }
+                  - { label: Source Sans 3, value: source-sans-3 }
+                  - { label: Playfair Display, value: playfair-display }
+                  - { label: DM Sans, value: dm-sans }
+                  - { label: Bodoni Moda, value: bodoni-moda }
+                  - { label: IBM Plex Sans, value: ibm-plex-sans }
+                  - { label: IBM Plex Serif, value: ibm-plex-serif }
+                  - { label: Work Sans, value: work-sans }
+                  - { label: Libre Baskerville, value: libre-baskerville }
+                  - { label: Outfit, value: outfit }
+                  - { label: Crimson Pro, value: crimson-pro }
+                  - { label: Fraunces, value: fraunces }
+              - label: Body font
+                name: fontBody
+                widget: select
+                required: false
+                options:
+                  - { label: Inter, value: inter }
+                  - { label: Lora, value: lora }
+                  - { label: Space Grotesk, value: space-grotesk }
+                  - { label: Source Serif 4, value: source-serif-4 }
+                  - { label: Source Sans 3, value: source-sans-3 }
+                  - { label: Playfair Display, value: playfair-display }
+                  - { label: DM Sans, value: dm-sans }
+                  - { label: Bodoni Moda, value: bodoni-moda }
+                  - { label: IBM Plex Sans, value: ibm-plex-sans }
+                  - { label: IBM Plex Serif, value: ibm-plex-serif }
+                  - { label: Work Sans, value: work-sans }
+                  - { label: Libre Baskerville, value: libre-baskerville }
+                  - { label: Outfit, value: outfit }
+                  - { label: Crimson Pro, value: crimson-pro }
+                  - { label: Fraunces, value: fraunces }
+              - { label: "Corner radius (px)", name: radius, widget: number, value_type: float, min: 0, max: 32, required: false }
+              - { label: "Spacing unit (rem)", name: spaceUnit, widget: number, value_type: float, min: 0.5, max: 2, required: false }
+              - { label: "Content width (rem)", name: contentWidth, widget: number, value_type: float, min: 30, max: 80, required: false }
 
   - name: pages
     label: Pages

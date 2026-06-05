@@ -3,5 +3,6 @@
   "template": "blog",
   "theme": "paper",
   "extraLinks": [],
-  "footerText": ""
+  "footerText": "",
+  "design": {}
 }

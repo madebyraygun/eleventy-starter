@@ -1,4 +1,7 @@
+const fs = require("node:fs");
 const markdownIt = require("markdown-it");
+const { designOverridesCss } = require("./lib/design-overrides");
+const { fontFacesCss, downloadMissingFonts } = require("./lib/fonts");
 
 module.exports = function (eleventyConfig) {
   // Sveltia CMS admin UI, uploads, and site assets are copied through as-is.
@@ -10,6 +13,17 @@ module.exports = function (eleventyConfig) {
   // deliberate: block markdown is trusted single-owner content.
   const md = markdownIt({ html: true, linkify: true });
   eleventyConfig.addFilter("md", (value) => (value ? md.render(String(value)) : ""));
+
+  // Design token overrides from CMS Site Settings. The download writes into
+  // watched src/assets/fonts, which can trigger one extra rebuild on first
+  // serve; the existsSync guard in downloadMissingFonts stops it looping.
+  eleventyConfig.addFilter("designOverrides", designOverridesCss);
+  eleventyConfig.addFilter("fontFaces", fontFacesCss);
+  eleventyConfig.on("eleventy.before", async () => {
+    const site = JSON.parse(fs.readFileSync("src/_data/site.json", "utf8"));
+    const catalog = JSON.parse(fs.readFileSync("src/_data/fontCatalog.json", "utf8"));
+    await downloadMissingFonts(site.design || {}, catalog, "src/assets/fonts");
+  });
 
   // Header/footer navigation: pages that opt in, in nav_order.
   eleventyConfig.addCollection("nav", (api) =>
