@@ -6,6 +6,10 @@
     <title>{% if title %}{{ title }} · {% endif %}{{ site.name }}</title>
     <link rel="stylesheet" href="/assets/css/fonts.css" />
     <link rel="stylesheet" href="/assets/css/themes/{{ site.theme }}.css" />
+    {%- set overridesCss = site.design | designOverrides(fontCatalog) %}
+    {%- if overridesCss %}
+    <style>{{ overridesCss | safe }}</style>
+    {%- endif %}
     <link rel="stylesheet" href="/assets/css/core.css" />
   </head>
   <body>
