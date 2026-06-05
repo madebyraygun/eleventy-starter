@@ -36,11 +36,10 @@ collections:
               - { label: Label, name: label, widget: string }
               - { label: URL, name: url, widget: string }
           - { label: Footer text, name: footerText, widget: string, required: false }
-          - label: Design
+          - label: Customize Design
             name: design
             widget: object
             collapsed: true
-            required: false
             fields:
               - { label: Background color, name: colorBg, widget: color, required: false }
               - { label: Surface color, name: colorSurface, widget: color, required: false }
